@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: ms-mesas
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8888
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://localhost:9090/auth/realms/usuarios_bar
+      
+      
+

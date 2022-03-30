@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: ms-mesas
+#  data:
+#    mongodb:
+#      host: localhost
+#      port: 27017
+#      password: password
+#      username: root
+#      authentication-database: admin
+#      database: productos
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  main:
+    allow-bean-definition-overriding: true
+server:
+  port: 8082
+  
+#mongock:
+#  change-logs-scan-package: rest.elchoco.productos.config.dbmigrations
+
+

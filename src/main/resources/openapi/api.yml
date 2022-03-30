@@ -1,0 +1,350 @@
+
+openapi: 3.0.0
+info:
+  title: ms-mesas
+  description: Microservice for tables in bar
+  version: 0.0.1
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+#servers:
+#  - url: 'https://localhost:8081/tables/v1'
+#  - url: 'http://localhost:8080/tables/v1'
+paths:
+  /tables:
+    get:
+      security:
+        - x-jwt-assertion: [ ]
+      tags:
+        - table
+      summary: Find all tables
+      description: Find List of tables
+      operationId: findAllTables
+      responses:
+          200:
+            $ref: '#/components/responses/tableCreate_array'
+          400:
+            $ref: '#/components/responses/bad_request'
+          500:
+            $ref: '#/components/responses/internal_error'
+  /tables/byId/{id}:        
+    put:
+      security:
+        - x-jwt-assertion: [ ]
+      tags:
+        - table
+      summary: Update or create an existing table
+      operationId: updateTable
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Table object that needs to be update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TableCreate'          
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/tableCreate'
+        400:
+          $ref: '#/components/responses/bad_request'
+        500:
+          $ref: '#/components/responses/internal_error'
+      x-codegen-request-body-name: body
+    get:
+      security:
+        - x-jwt-assertion: [ ]
+      tags:
+        - table
+      summary: Find tables by id
+      description: Find tables by id
+      operationId: findTableById
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          $ref: '#/components/responses/tableCreate'
+        400:
+          $ref: '#/components/responses/bad_request'
+        500:
+          $ref: '#/components/responses/internal_error'
+      
+  /tables/byId/delete/{id}:        
+    put:
+      security:
+        - x-jwt-assertion: [ ]
+      tags:
+        - table
+      summary: Update or create an existing table
+      operationId: deleteTable
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Table object that needs to be update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TableCreate'          
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/tableCreate'
+        400:
+          $ref: '#/components/responses/bad_request'
+        500:
+          $ref: '#/components/responses/internal_error'
+      x-codegen-request-body-name: body
+      
+  /tables/byId/cash/{id}:        
+    put:
+      security:
+        - x-jwt-assertion: [ ]
+      tags:
+        - table
+      summary: Update or create an existing table
+      operationId: cashTable
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Table object that needs to be update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TableCreate'          
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/tableCreate'
+        400:
+          $ref: '#/components/responses/bad_request'
+        500:
+          $ref: '#/components/responses/internal_error'
+      x-codegen-request-body-name: body
+      
+  /tables/byPlace/{terraceOrSalonOrBarra}:        
+    get:
+      security:
+        - x-jwt-assertion: [ ]
+      tags:
+        - table
+      summary: Find all tables by place
+      description: t is terrace and s is salon b is barra
+      operationId: findAllTablesByPlace
+      parameters:
+        - name: terraceOrSalonOrBarra
+          in: path
+          description: t is terrace and s is salon or b is barra
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          $ref: '#/components/responses/tableCreate_array'
+        400:
+          $ref: '#/components/responses/bad_request'
+        500:
+          $ref: '#/components/responses/internal_error'
+          
+  /tables/byPlaceAndWaiter/{terraceOrSalonOrBarra}/{waiterCode}:        
+    get:
+      security:
+        - x-jwt-assertion: [ ]
+      tags:
+        - table
+      summary: Find all tables by place and waiter
+      description: t is terrace and s is salon and familyCode
+      operationId: findAllTablesByPlaceAndWaiterCode
+      parameters:
+        - name: terraceOrSalonOrBarra
+          in: path
+          description: t is terrace and s is salon b is barra
+          required: true
+          schema:
+            type: string
+        - name: waiterCode
+          in: path
+          description: WaiterCode value that need to be considered for filter
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          $ref: '#/components/responses/tableCreate_array'
+        400:
+          $ref: '#/components/responses/bad_request'
+        500:
+          $ref: '#/components/responses/internal_error'          
+
+  /tables/byName/{name}:
+    get:
+      security:
+        - x-jwt-assertion: [ ]
+      tags:
+        - table
+      summary: Find table by name
+      description: Find tables by name
+      operationId: findTablesByName
+      parameters:
+        - name: name
+          in: path
+          description: name value that need to be considered for filter
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          $ref: '#/components/responses/tableCreate_array'
+        400:
+          $ref: '#/components/responses/bad_request'
+        500:
+          $ref: '#/components/responses/internal_error'  
+    
+    delete:
+      security:
+        - x-jwt-assertion: [ ]
+      tags:
+        - table
+      summary: 'Delete table by name'
+#      operationId: deleteTable
+      parameters:
+        - name: name
+          in: path
+          description: Table name to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        400:
+          $ref: '#/components/responses/bad_request'
+        500:
+          $ref: '#/components/responses/internal_error'
+
+components:
+  responses:
+    tableCreate:
+      description: Tableo completo con todas propiedades
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TableCreate'
+    tableCreate_array:
+      description: Respuesta tableCreate
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/TableCreate'              
+    void_rs:
+      description: Respuesta de operación satisfactoria sin contenido
+    bad_request:
+      description: En caso de que no se envien los datos necesarios para realizar la operación o los mismos tengan un formato erroneo
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error_response'
+    internal_error:
+      description: En caso de error general en el servidor
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error_response'
+  schemas:
+    TableCreate:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        originalName:
+          type: string
+        waiter:
+          type: string
+        price:
+          type: double
+        place:
+          type: string
+        free:
+          type: boolean
+        state:
+          type: string
+          enum:
+            - POR_COGER_COMANDA
+            - POR_PEDIR_COCINA
+            - ESPERANDO_COCINA
+            - SERVIDO
+        products:
+          type: array
+          items:
+                $ref: '#/components/schemas/Product'
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        amount:
+          type: double
+        price:
+          type: double
+        place:
+          type: string
+        state:
+          type: string
+          enum:
+            - POR_PEDIR
+            - ESPERANDO
+            - SERVIDO
+    error_response:
+      type: object
+      properties:
+        error:
+          required:
+            - message
+            - request_id
+          type: object
+          description: Payload estandard 
+          properties:
+            message:
+              type: string
+              description: Describe la causa del error. 
+            request_id:
+              type: string
+              description: Describe un código de petición único. 
+            details:
+              type: string
+              description: Contiene un objeto con el detalle adicional de errores
+                que desee aportar cada table owner del aplicativo
+            code:
+              type: integer
+              description: Respuesta proporcionada por las aplicaciones en caso de
+                error.
+      description: >-        
+  securitySchemes:
+    x-jwt-assertion:
+      type: apiKey
+      in: header
+      name: x-jwt-assertion

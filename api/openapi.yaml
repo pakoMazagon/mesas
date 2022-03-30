@@ -1,0 +1,553 @@
+openapi: 3.0.0
+info:
+  description: Microservice for products in bar
+  title: ms-productos
+  version: 0.0.1
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: /
+paths:
+  /products:
+    get:
+      description: Find List of products
+      operationId: findAllProducts
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProductCreate'
+                type: array
+          description: Respuesta productCreate
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de que no se envien los datos necesarios para realizar
+            la operación o los mismos tengan un formato erroneo
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de error general en el servidor
+      security:
+      - x-jwt-assertion: []
+      summary: Find all products
+      tags:
+      - product
+      x-accepts: application/json
+    post:
+      operationId: addProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductCreate'
+        description: Product object that needs to be added
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCreate'
+          description: Producto completo con todas propiedades
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de que no se envien los datos necesarios para realizar
+            la operación o los mismos tengan un formato erroneo
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de error general en el servidor
+      security:
+      - x-jwt-assertion: []
+      summary: Add a new product
+      tags:
+      - product
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+    put:
+      operationId: updateProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductCreate'
+        description: Product object that needs to be update
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCreate'
+          description: Producto completo con todas propiedades
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de que no se envien los datos necesarios para realizar
+            la operación o los mismos tengan un formato erroneo
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de error general en el servidor
+      security:
+      - x-jwt-assertion: []
+      summary: Update or create an existing product
+      tags:
+      - product
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /products/byFamily/{familyCode}:
+    get:
+      description: Find products by familyCode
+      operationId: findProductsByFamily
+      parameters:
+      - description: familyCode value that need to be considered for filter
+        explode: false
+        in: path
+        name: familyCode
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProductCreate'
+                type: array
+          description: Respuesta productCreate
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de que no se envien los datos necesarios para realizar
+            la operación o los mismos tengan un formato erroneo
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de error general en el servidor
+      security:
+      - x-jwt-assertion: []
+      summary: Find products by familyCode
+      tags:
+      - product
+      x-accepts: application/json
+  /products/byPlace/{terraceOrSalon}:
+    get:
+      description: t is terrace and s is salon
+      operationId: findAllProductsByPlace
+      parameters:
+      - description: t is terrace and s is salon
+        explode: false
+        in: path
+        name: terraceOrSalon
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProductPlace'
+                type: array
+          description: Respuesta productPlace
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de que no se envien los datos necesarios para realizar
+            la operación o los mismos tengan un formato erroneo
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de error general en el servidor
+      security:
+      - x-jwt-assertion: []
+      summary: Find all products by place
+      tags:
+      - product
+      x-accepts: application/json
+  /products/byPlaceAndFamilyCode/{terraceOrSalon}/{familyCode}:
+    get:
+      description: t is terrace and s is salon and familyCode
+      operationId: findAllProductsByPlaceAndFamilyCode
+      parameters:
+      - description: t is terrace and s is salon
+        explode: false
+        in: path
+        name: terraceOrSalon
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: familyCode value that need to be considered for filter
+        explode: false
+        in: path
+        name: familyCode
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProductPlace'
+                type: array
+          description: Respuesta productPlace
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de que no se envien los datos necesarios para realizar
+            la operación o los mismos tengan un formato erroneo
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de error general en el servidor
+      security:
+      - x-jwt-assertion: []
+      summary: Find all products by place and family
+      tags:
+      - product
+      x-accepts: application/json
+  /products/byPlaceAndName/{terraceOrSalon}/{name}:
+    get:
+      description: Find products by name and place
+      operationId: findProductsByPlaceAndName
+      parameters:
+      - description: t is terrace and s is salon
+        explode: false
+        in: path
+        name: terraceOrSalon
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: name value that need to be considered for filter
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProductPlace'
+                type: array
+          description: Respuesta productPlace
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de que no se envien los datos necesarios para realizar
+            la operación o los mismos tengan un formato erroneo
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de error general en el servidor
+      security:
+      - x-jwt-assertion: []
+      summary: Find product by name and place
+      tags:
+      - product
+      x-accepts: application/json
+  /products/byName/{name}:
+    delete:
+      parameters:
+      - description: Product name to delete
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de que no se envien los datos necesarios para realizar
+            la operación o los mismos tengan un formato erroneo
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de error general en el servidor
+      security:
+      - x-jwt-assertion: []
+      summary: Delete product by name
+      tags:
+      - product
+      x-accepts: application/json
+    get:
+      description: Find products by name
+      operationId: findProductsByName
+      parameters:
+      - description: name value that need to be considered for filter
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProductCreate'
+                type: array
+          description: Respuesta productCreate
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de que no se envien los datos necesarios para realizar
+            la operación o los mismos tengan un formato erroneo
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: En caso de error general en el servidor
+      security:
+      - x-jwt-assertion: []
+      summary: Find product by name
+      tags:
+      - product
+      x-accepts: application/json
+components:
+  responses:
+    productCreate:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductCreate'
+      description: Producto completo con todas propiedades
+    productCreate_array:
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/ProductCreate'
+            type: array
+      description: Respuesta productCreate
+    productPlace:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductPlace'
+      description: Producto completo con todas propiedades
+    productPlace_array:
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/ProductPlace'
+            type: array
+      description: Respuesta productPlace
+    void_rs:
+      description: Respuesta de operación satisfactoria sin contenido
+    bad_request:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error_response'
+      description: En caso de que no se envien los datos necesarios para realizar
+        la operación o los mismos tengan un formato erroneo
+    internal_error:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error_response'
+      description: En caso de error general en el servidor
+  schemas:
+    ProductCreate:
+      example:
+        image: image
+        pricesTerrace:
+          scales:
+          - price: 0.8008281904610115
+            scale: scale
+          - price: 0.8008281904610115
+            scale: scale
+        name: name
+        pricesSalon:
+          scales:
+          - price: 0.8008281904610115
+            scale: scale
+          - price: 0.8008281904610115
+            scale: scale
+        id: id
+        family:
+          code: code
+          name: name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        family:
+          $ref: '#/components/schemas/Family'
+        image:
+          type: string
+        pricesTerrace:
+          $ref: '#/components/schemas/Parameters'
+        pricesSalon:
+          $ref: '#/components/schemas/Parameters'
+      type: object
+    ProductPlace:
+      example:
+        image: image
+        pricesByScales:
+          scales:
+          - price: 0.8008281904610115
+            scale: scale
+          - price: 0.8008281904610115
+            scale: scale
+        name: name
+        id: id
+        family:
+          code: code
+          name: name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        family:
+          $ref: '#/components/schemas/Family'
+        image:
+          type: string
+        pricesByScales:
+          $ref: '#/components/schemas/Parameters'
+      type: object
+    Family:
+      example:
+        code: code
+        name: name
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+      type: object
+    Parameters:
+      example:
+        scales:
+        - price: 0.8008281904610115
+          scale: scale
+        - price: 0.8008281904610115
+          scale: scale
+      properties:
+        scales:
+          items:
+            $ref: '#/components/schemas/Scale'
+          type: array
+      type: object
+    Scale:
+      example:
+        price: 0.8008281904610115
+        scale: scale
+      properties:
+        scale:
+          type: string
+        price:
+          type: number
+      type: object
+    error_response:
+      properties:
+        error:
+          $ref: '#/components/schemas/error_response_error'
+      type: object
+    error_response_error:
+      description: Payload estandard de ECI segun gobierno de API
+      properties:
+        message:
+          description: Describe la causa del error. Las descripciones se deberán componer
+            de textos fijos para cada tipo de error producido, por lo que deben ser
+            generadas a partir de una estructura de datos como un enumerado.
+          type: string
+        request_id:
+          description: Describe un código de petición único. Esto permite disponer
+            de trazabilidad en caso de necesitar inspeccionar logs.
+          type: string
+        details:
+          description: Contiene un objeto con el detalle adicional de errores que
+            desee aportar cada product owner del aplicativo sobre el que se desarrolla
+            el servicio REST y que debe ser definido por este. Puede contener arrays
+            con mayor detalle.
+          type: string
+        code:
+          description: Respuesta proporcionada por las aplicaciones en caso de error.
+            Dicho valor será utilizado como Código de Error de Aplicación, siendo
+            su empleo opcional y de libre uso por parte de los responsables de las
+            aplicaciones para gestionar sus propios códigos de retorno ante errores,
+            aunque en caso de utilizarse, es obligatorio documentar apropiadamente
+            el significado de cada uno de los posibles valores devueltos en dicho
+            atributo, pudiendo documentarse en el propio fichero OpenAPI o pudiendo
+            ser documentado apropiadamente (subiendo documentación adicional al API
+            con los posibles códigos de error o un enlace a dicha documentación a
+            un enlace externo) para que sea fácilmente accesible en caso de precisarse
+            consultar.
+          type: integer
+      required:
+      - message
+      - request_id
+      type: object
+  securitySchemes:
+    x-jwt-assertion:
+      in: header
+      name: x-jwt-assertion
+      type: apiKey
+

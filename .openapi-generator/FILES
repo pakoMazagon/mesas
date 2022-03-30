@@ -1,0 +1,6 @@
+src/main/java/rest/elchoco/mesas/openAPI/controller/ApiUtil.java
+src/main/java/rest/elchoco/mesas/openAPI/controller/TablesApi.java
+src/main/java/rest/elchoco/mesas/openAPI/dto/ErrorResponseErrorRDTO.java
+src/main/java/rest/elchoco/mesas/openAPI/dto/ErrorResponseRDTO.java
+src/main/java/rest/elchoco/mesas/openAPI/dto/ProductRDTO.java
+src/main/java/rest/elchoco/mesas/openAPI/dto/TableCreateRDTO.java
