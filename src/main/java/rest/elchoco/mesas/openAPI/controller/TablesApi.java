@@ -6,6 +6,7 @@
 package rest.elchoco.mesas.openAPI.controller;
 
 import rest.elchoco.mesas.openAPI.dto.ErrorResponseRDTO;
+import rest.elchoco.mesas.openAPI.dto.ProductKitchenRDTO;
 import rest.elchoco.mesas.openAPI.dto.TableCreateRDTO;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-03-30T13:23:45.743486700+02:00[Europe/Paris]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-04-11T16:36:54.462410+02:00[Europe/Paris]")
 @Validated
 @Api(value = "tables", description = "the tables API")
 public interface TablesApi {
@@ -57,7 +58,7 @@ public interface TablesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" } ] }";
+                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -94,7 +95,42 @@ public interface TablesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" } ] }";
+                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    /**
+     * GET /tables/waitingInKitchen : Find all products pending in tables
+     * Find List of products pending in kitchen tables
+     *
+     * @return Respuesta productosCocina (status code 200)
+     *         or En caso de que no se envien los datos necesarios para realizar la operación o los mismos tengan un formato erroneo (status code 400)
+     *         or En caso de error general en el servidor (status code 500)
+     */
+    @ApiOperation(value = "Find all products pending in tables", nickname = "findAllProductsPendingInTables", notes = "Find List of products pending in kitchen tables", response = ProductKitchenRDTO.class, responseContainer = "List", authorizations = {
+        
+        @Authorization(value = "x-jwt-assertion")
+         }, tags={ "table", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Respuesta productosCocina", response = ProductKitchenRDTO.class, responseContainer = "List"),
+        @ApiResponse(code = 400, message = "En caso de que no se envien los datos necesarios para realizar la operación o los mismos tengan un formato erroneo", response = ErrorResponseRDTO.class),
+        @ApiResponse(code = 500, message = "En caso de error general en el servidor", response = ErrorResponseRDTO.class) })
+    @GetMapping(
+        value = "/tables/waitingInKitchen",
+        produces = { "application/json" }
+    )
+    default ResponseEntity<List<ProductKitchenRDTO>> findAllProductsPendingInTables() {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"amount\" : \"\", \"idTable\" : \"idTable\", \"nameTable\" : \"nameTable\", \"originalNameTable\" : \"originalNameTable\", \"name\" : \"name\", \"idProduct\" : \"idProduct\", \"waiter\" : \"waiter\", \"state\" : \"BARRA\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -129,7 +165,7 @@ public interface TablesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" } ] }";
+                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -165,7 +201,7 @@ public interface TablesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" } ] }";
+                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -177,11 +213,12 @@ public interface TablesApi {
 
 
     /**
-     * GET /tables/byPlaceAndWaiter/{terraceOrSalonOrBarra}/{waiterCode} : Find all tables by place and waiter
+     * GET /tables/byPlaceAndWaiter/{terraceOrSalonOrBarra}/{waiterCode}/{includeFrees} : Find all tables by place and waiter
      * t is terrace and s is salon and familyCode
      *
      * @param terraceOrSalonOrBarra t is terrace and s is salon b is barra (required)
      * @param waiterCode WaiterCode value that need to be considered for filter (required)
+     * @param includeFrees includeFrees value is false by default, if change to true include the free tables in the return (required)
      * @return Respuesta tableCreate (status code 200)
      *         or En caso de que no se envien los datos necesarios para realizar la operación o los mismos tengan un formato erroneo (status code 400)
      *         or En caso de error general en el servidor (status code 500)
@@ -195,14 +232,14 @@ public interface TablesApi {
         @ApiResponse(code = 400, message = "En caso de que no se envien los datos necesarios para realizar la operación o los mismos tengan un formato erroneo", response = ErrorResponseRDTO.class),
         @ApiResponse(code = 500, message = "En caso de error general en el servidor", response = ErrorResponseRDTO.class) })
     @GetMapping(
-        value = "/tables/byPlaceAndWaiter/{terraceOrSalonOrBarra}/{waiterCode}",
+        value = "/tables/byPlaceAndWaiter/{terraceOrSalonOrBarra}/{waiterCode}/{includeFrees}",
         produces = { "application/json" }
     )
-    default ResponseEntity<List<TableCreateRDTO>> findAllTablesByPlaceAndWaiterCode(@ApiParam(value = "t is terrace and s is salon b is barra",required=true) @PathVariable("terraceOrSalonOrBarra") String terraceOrSalonOrBarra,@ApiParam(value = "WaiterCode value that need to be considered for filter",required=true) @PathVariable("waiterCode") String waiterCode) {
+    default ResponseEntity<List<TableCreateRDTO>> findAllTablesByPlaceAndWaiterCode(@ApiParam(value = "t is terrace and s is salon b is barra",required=true) @PathVariable("terraceOrSalonOrBarra") String terraceOrSalonOrBarra,@ApiParam(value = "WaiterCode value that need to be considered for filter",required=true) @PathVariable("waiterCode") String waiterCode,@ApiParam(value = "includeFrees value is false by default, if change to true include the free tables in the return",required=true, defaultValue="false") @PathVariable("includeFrees") Boolean includeFrees) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" } ] }";
+                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -238,7 +275,7 @@ public interface TablesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" } ] }";
+                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -274,7 +311,7 @@ public interface TablesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" } ] }";
+                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -335,7 +372,7 @@ public interface TablesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"POR_PEDIR\" } ] }";
+                    String exampleString = "{ \"originalName\" : \"originalName\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"waiter\" : \"waiter\", \"place\" : \"place\", \"state\" : \"POR_COGER_COMANDA\", \"free\" : true, \"products\" : [ { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true }, { \"amount\" : \"\", \"price\" : \"\", \"name\" : \"name\", \"id\" : \"id\", \"place\" : \"place\", \"state\" : \"BARRA\", \"kitchen\" : true } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

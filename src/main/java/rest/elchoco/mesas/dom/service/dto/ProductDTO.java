@@ -25,4 +25,8 @@ public class ProductDTO {
 	private String place;
 	
 	private StateEnum state;
+	
+	private Boolean kitchen;
+	
+	private TableDTO tableDTO;
 }

@@ -8,7 +8,7 @@ public interface TableService {
 
 	List<TableDTO> findByPlace(String place);
 	List<TableDTO> findByWaiter(String waiter);
-	List<TableDTO> findByPlaceAndWaiter(String place, String waiter);
+	List<TableDTO> findByPlaceAndWaiter(String place, String waiter, Boolean includeFrees);
 	List<TableDTO> findByName(String name);
 	
 	TableDTO findById(String id);
@@ -18,4 +18,5 @@ public interface TableService {
 	TableDTO metodoPruebaPatronSAGA(String id, TableDTO tableDTO);
 	TableDTO cashTable(String id, TableDTO tableDTO);
 	TableDTO deleteTable(String id, TableDTO tableDTO);
+	List<TableDTO> findAllProductsByStateInNotFreeTables(List<String> states);
 }
