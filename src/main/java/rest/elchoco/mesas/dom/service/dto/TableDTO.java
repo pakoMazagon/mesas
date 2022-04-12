@@ -30,5 +30,5 @@ public class TableDTO {
 
 	private StateEnum state;
 
-	private List<ProductDTO> products = null;
+	private List<ProductDTO> products;
 }

@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
 /**
  * ProductRDTO
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-03-30T13:23:45.743486700+02:00[Europe/Paris]")@lombok.Builder
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-04-11T16:36:54.462410+02:00[Europe/Paris]")@lombok.Builder
 									@lombok.NoArgsConstructor @lombok.AllArgsConstructor
 
 public class ProductRDTO   {
@@ -32,13 +32,20 @@ public class ProductRDTO   {
   @JsonProperty("place")
   private String place;
 
+  @JsonProperty("kitchen")
+  private Boolean kitchen;
+
   /**
    * Gets or Sets state
    */
   public enum StateEnum {
+    BARRA("BARRA"),
+    
     POR_PEDIR("POR_PEDIR"),
     
-    ESPERANDO("ESPERANDO"),
+    PEDIDO_A_COCINA("PEDIDO_A_COCINA"),
+    
+    EN_MARCHA_COCINA("EN_MARCHA_COCINA"),
     
     SERVIDO("SERVIDO");
 
@@ -172,6 +179,26 @@ public class ProductRDTO   {
     this.place = place;
   }
 
+  public ProductRDTO kitchen(Boolean kitchen) {
+    this.kitchen = kitchen;
+    return this;
+  }
+
+  /**
+   * Get kitchen
+   * @return kitchen
+  */
+  @ApiModelProperty(value = "")
+
+
+  public Boolean getKitchen() {
+    return kitchen;
+  }
+
+  public void setKitchen(Boolean kitchen) {
+    this.kitchen = kitchen;
+  }
+
   public ProductRDTO state(StateEnum state) {
     this.state = state;
     return this;
@@ -207,12 +234,13 @@ public class ProductRDTO   {
         Objects.equals(this.amount, product.amount) &&
         Objects.equals(this.price, product.price) &&
         Objects.equals(this.place, product.place) &&
+        Objects.equals(this.kitchen, product.kitchen) &&
         Objects.equals(this.state, product.state);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, amount, price, place, state);
+    return Objects.hash(id, name, amount, price, place, kitchen, state);
   }
 
   @Override
@@ -225,6 +253,7 @@ public class ProductRDTO   {
     sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");
     sb.append("    place: ").append(toIndentedString(place)).append("\n");
+    sb.append("    kitchen: ").append(toIndentedString(kitchen)).append("\n");
     sb.append("    state: ").append(toIndentedString(state)).append("\n");
     sb.append("}");
     return sb.toString();

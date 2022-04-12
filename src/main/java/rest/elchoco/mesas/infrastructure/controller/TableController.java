@@ -1,5 +1,6 @@
 package rest.elchoco.mesas.infrastructure.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ import rest.elchoco.mesas.dom.service.TableService;
 import rest.elchoco.mesas.dom.service.dto.TableDTO;
 import rest.elchoco.mesas.infrastructure.mapper.TableMapper;
 import rest.elchoco.mesas.openAPI.controller.TablesApi;
+import rest.elchoco.mesas.openAPI.dto.ProductKitchenRDTO;
 import rest.elchoco.mesas.openAPI.dto.TableCreateRDTO;
 
 //@CrossOrigin(origins = "*")
@@ -51,8 +53,8 @@ public class TableController implements TablesApi {
 	}
 
 	@Override
-	public ResponseEntity<List<TableCreateRDTO>> findAllTablesByPlaceAndWaiterCode(String terraceOrSalonOrBarra, String waiterCode) {
-		List<TableDTO> listTables = tableService.findByPlaceAndWaiter(terraceOrSalonOrBarra, waiterCode);
+	public ResponseEntity<List<TableCreateRDTO>> findAllTablesByPlaceAndWaiterCode(String terraceOrSalonOrBarra, String waiterCode, Boolean includeFrees) {
+		List<TableDTO> listTables = tableService.findByPlaceAndWaiter(terraceOrSalonOrBarra, waiterCode, includeFrees);
 		
 		List<TableCreateRDTO> listTablesDev = parseListTableDTOToTableCreateRDTO(listTables);
 		return ResponseEntity.ok(listTablesDev);
@@ -109,6 +111,20 @@ public class TableController implements TablesApi {
 		TableCreateRDTO tableDev = mapper.tableDTOToTableCreateRDTO(tableDTO);
 		return ResponseEntity.ok(tableDev);
 	}
+
+	@Override
+	public ResponseEntity<List<ProductKitchenRDTO>> findAllProductsPendingInTables() {
+		List<String> listStates = new ArrayList();
+		listStates.add("POR_PEDIR");
+		listStates.add("PEDIDO_A_COCINA");
+		listStates.add("EN_MARCHA_COCINA");				
+		List<ProductKitchenRDTO> listProductsKitchen = tableService.findAllProductsByStateInNotFreeTables(listStates).stream()			
+			.flatMap(tabDTO -> tabDTO.getProducts().stream())
+			.map( prodDTO ->{
+				return this.mapper.from(prodDTO.getTableDTO(), prodDTO);
+			}).collect(Collectors.toList());			
+		return ResponseEntity.ok(listProductsKitchen);
+	} 
 	
 	
 

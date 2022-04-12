@@ -27,6 +27,22 @@ paths:
             $ref: '#/components/responses/bad_request'
           500:
             $ref: '#/components/responses/internal_error'
+  /tables/waitingInKitchen: 
+    get:
+      security:
+        - x-jwt-assertion: [ ]
+      tags:
+        - table
+      summary: Find all products pending in tables
+      description: Find List of products pending in kitchen tables
+      operationId: findAllProductsPendingInTables
+      responses:
+          200:
+            $ref: '#/components/responses/productsKitchen_array'
+          400:
+            $ref: '#/components/responses/bad_request'
+          500:
+            $ref: '#/components/responses/internal_error'
   /tables/byId/{id}:        
     put:
       security:
@@ -166,7 +182,7 @@ paths:
         500:
           $ref: '#/components/responses/internal_error'
           
-  /tables/byPlaceAndWaiter/{terraceOrSalonOrBarra}/{waiterCode}:        
+  /tables/byPlaceAndWaiter/{terraceOrSalonOrBarra}/{waiterCode}/{includeFrees}:        
     get:
       security:
         - x-jwt-assertion: [ ]
@@ -188,6 +204,13 @@ paths:
           required: true
           schema:
             type: string
+        - name: includeFrees
+          in: path
+          description: includeFrees value is false by default, if change to true include the free tables in the return
+          required: true
+          schema:
+            type: boolean
+            default: false
       responses:
         200:
           $ref: '#/components/responses/tableCreate_array'
@@ -255,7 +278,15 @@ components:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/TableCreate'              
+              $ref: '#/components/schemas/TableCreate'  
+    productsKitchen_array:
+      description: Respuesta productosCocina
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/ProductKitchen'  
     void_rs:
       description: Respuesta de operación satisfactoria sin contenido
     bad_request:
@@ -271,6 +302,31 @@ components:
           schema:
             $ref: '#/components/schemas/error_response'
   schemas:
+    ProductKitchen:
+      type: object
+      properties:
+        idTable:
+          type: string
+        nameTable:
+          type: string
+        originalNameTable:
+          type: string
+        waiter:
+          type: string
+        idProduct:
+          type: string
+        name:
+          type: string
+        amount:
+          type: double
+        state:
+          type: string
+          enum:
+            - BARRA
+            - POR_PEDIR
+            - PEDIDO_A_COCINA
+            - EN_MARCHA_COCINA
+            - SERVIDO
     TableCreate:
       type: object
       properties:
@@ -312,11 +368,15 @@ components:
           type: double
         place:
           type: string
+        kitchen:
+          type: boolean
         state:
           type: string
           enum:
+            - BARRA
             - POR_PEDIR
-            - ESPERANDO
+            - PEDIDO_A_COCINA
+            - EN_MARCHA_COCINA
             - SERVIDO
     error_response:
       type: object

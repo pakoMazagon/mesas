@@ -25,4 +25,6 @@ public class Product {
 	private String place;
 	
 	private StateEnum state;
+	
+	private Boolean kitchen;
 }

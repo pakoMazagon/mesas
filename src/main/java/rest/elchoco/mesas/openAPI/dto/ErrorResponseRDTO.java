@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
 /**
  * ErrorResponseRDTO
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-03-30T13:23:45.743486700+02:00[Europe/Paris]")@lombok.Builder
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-04-11T16:36:54.462410+02:00[Europe/Paris]")@lombok.Builder
 									@lombok.NoArgsConstructor @lombok.AllArgsConstructor
 
 public class ErrorResponseRDTO   {
